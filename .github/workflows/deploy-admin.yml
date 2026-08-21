@@ -1,0 +1,48 @@
+name: Deploy Admin Panel to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-admin
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: admin-panel
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      # VITE_API_URL must point to the deployed backend (e.g. Render/Railway).
+      # Set it as a repo secret or replace the placeholder below.
+      - run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.ADMIN_API_URL || 'https://your-anpmart-api.onrender.com' }}
+      # SPA fallback so client routes don't 404 on refresh
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: admin-panel/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

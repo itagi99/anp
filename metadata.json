@@ -1,0 +1,7 @@
+{
+  "name": "ShopKart",
+  "description": "Real-Time E-Commerce & Live Inventory Store with Professional Polish Design",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

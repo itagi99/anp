@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Shopping Bag Outline & Body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,38 L74,38 C76.2,38 78,39.8 77.8,42 L74.8,76 C74.6,78.2 72.8,80 70.6,80 L37.4,80 C35.2,80 33.4,78.2 33.2,76 L30.2,42 C30,39.8 31.8,38 34,38 Z" />
+    
+    <!-- Bag Handle -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M44,38 C44,30 46,26 54,26 C62,26 64,30 64,38" />
+
+    <!-- Lightning Bolt Accent in Center (Gold/Yellow) -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M56,44 L44,58 L52,58 L48,72 L64,55 L56,55 Z" />
+</vector>
