@@ -1,5 +1,8 @@
 {
+  "buildCommand": "cd customer-store && npm install && npm run build",
+  "outputDirectory": "customer-store/dist",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api" }
+    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
