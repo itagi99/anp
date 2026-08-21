@@ -1,4 +1,4 @@
-import app from '../src/server.js';
+import app from '../server/src/server.js';
 
 // Vercel serverless function (optional catch-all: matches /api and /api/*).
 // The vercel.json rewrite forwards "/<path>" -> "/api/<path>", so we strip

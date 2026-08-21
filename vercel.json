@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "node server/src/scripts/initDb.js && node server/src/scripts/seedDb.js && node server/src/scripts/seedAnpmart.js",
+  "functions": {
+    "api/[[catchall]].js": {
+      "includeFiles": ["server/**"]
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/$1" }
+  ]
+}
