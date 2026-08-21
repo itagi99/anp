@@ -24,7 +24,7 @@ function parseStatements(sqlContent) {
 async function initializeDatabase() {
   try {
     console.log('[Turso DB Init] Reading schema.sql...');
-    const schemaPath = path.resolve(__dirname, '../../../database/schema.sql');
+    const schemaPath = path.resolve(__dirname, '../../database/schema.sql');
     const sqlContent = fs.readFileSync(schemaPath, 'utf-8');
 
     const statements = parseStatements(sqlContent);

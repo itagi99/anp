@@ -20,10 +20,13 @@ import adminFeaturesRoutes from './routes/adminFeatures.js';
 dotenv.config();
 
 const app = express();
-const server = http.createServer(app);
+let server = null;
 
-// Initialize Socket.io
-initializeSocket(server);
+// Initialize Socket.io only for long-running (local) servers, not Vercel serverless
+if (!process.env.VERCEL) {
+  server = http.createServer(app);
+  initializeSocket(server);
+}
 
 // Middleware
 app.use(cors({ origin: '*' }));
@@ -53,9 +56,13 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error', message: err.message });
 });
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`🚀 ShopKart Server running on http://localhost:${PORT}`);
-});
+// Start the HTTP server only when run as a standalone process (local/dev/Node host),
+// not when imported as a Vercel serverless function.
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  server.listen(PORT, () => {
+    console.log(`🚀 ShopKart Server running on http://localhost:${PORT}`);
+  });
+}
 
 export default app;

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "node src/scripts/initDb.js && node src/scripts/seedDb.js && node src/scripts/seedAnpmart.js",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": ["database/**", "src/**"]
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api" }
+  ]
+}

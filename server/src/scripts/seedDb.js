@@ -21,7 +21,7 @@ function parseStatements(sqlContent) {
 async function seedDatabase() {
   try {
     console.log('[Turso DB Seed] Reading seed.sql...');
-    const seedPath = path.resolve(__dirname, '../../../database/seed.sql');
+    const seedPath = path.resolve(__dirname, '../../database/seed.sql');
     const sqlContent = fs.readFileSync(seedPath, 'utf-8');
 
     const statements = parseStatements(sqlContent);
