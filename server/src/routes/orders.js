@@ -64,14 +64,14 @@ router.post('/anp-checkout', async (req, res) => {
 
     // Insert main order record FIRST so order_items FK resolves
     transactionStatements.push({
-      sql: `INSERT INTO orders (id, user_id, status, subtotal, discount, delivery_fee, delivery_charge, total, delivery_address, coupon_id, payment_method, payment_status)
-            VALUES (?, ?, 'PLACED', ?, ?, 0, ?, ?, ?, ?, ?, ?)`,
+      sql: `INSERT INTO orders (id, user_id, status, subtotal, discount, delivery_fee, delivery_charge, total, total_price, delivery_address, coupon_id, coupon_code, coupon_discount, payment_method, payment_status, delivery_status, order_date, updated_at)
+            VALUES (?, ?, 'PLACED', ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
       args: [
         orderId, userId,
         Number(subtotal), Number(discount),
-        Number(delivery_charge), Number(total),
+        Number(delivery_charge), Number(total), Number(total),
         String(delivery_address),
-        couponId,
+        couponId, coupon_code || null, Number(discount),
         paymentMethodNorm,
         paymentMethodNorm === 'COD' ? 'PENDING' : 'PAID',
       ],
@@ -254,18 +254,22 @@ router.post('/checkout', async (req, res) => {
 
     // Insert main Order record
     transactionStatements.push({
-      sql: `INSERT INTO orders (id, user_id, status, subtotal, discount, delivery_fee, total, address_id, coupon_id, payment_method, payment_status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      sql: `INSERT INTO orders (id, user_id, status, subtotal, discount, delivery_fee, total, total_price, delivery_charge, delivery_address, address_id, coupon_id, coupon_code, coupon_discount, payment_method, payment_status, delivery_status, order_date, updated_at)
+            VALUES (?, ?, 'PLACED', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
       args: [
         orderId,
         userId,
-        'PLACED',
         subtotal,
         discount,
         deliveryFee,
         total,
+        total,
+        deliveryFee,
+        null,
         addressId,
         couponId,
+        couponCode || null,
+        discount,
         paymentMethod,
         paymentMethod === 'COD' ? 'PENDING' : 'PAID',
       ],
